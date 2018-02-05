@@ -1,0 +1,9 @@
+numpy
+matplotlib
+pandas
+seaborn
+bokeh
+Pillow
+oauth2client
+gspread
+wordcloud

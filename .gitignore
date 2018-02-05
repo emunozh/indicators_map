@@ -1,2 +1,4 @@
 .ipynb_checkpoints/
-ovmarkets-3dd85aa5a711.json
+credentials.json
+env/
+*.xlsx
