@@ -22,29 +22,29 @@ from wordcloud import WordCloud, STOPWORDS
 class indicator_map():
     """Main class for the construction of heatmaps and tag-cluds."""
 
-    def __init__(
+    def __init__(self,
             file_name = "Indicator matching",
             credentials = "credentials.json",
-            file_name = "Indicator matching",
             tail = -650,
-            mask_file = 'FIGURES/circular2.png'):
+            cat_main = "Category",
+            add_stopwords = list(),
+            cat_second = "Abstract Indicator Name",
             figures_folder = "FIGURES",
-            mask_file = "circular.png",
+            mask_file = "circular.png"):
+        # make credential for Google API
         credentials_file = path.join(os.getcwd(), credentials)
         print('using {} as credentials'.format(credentials_file))
-        credentials = ServiceAccountCredentials.from_json_keyfile_name(credentials_file, scope)
-        self.cat_main = cat_main
-        self.cat_second = cat_second
-        self.file_name = file_name
-        self.cf = credentials
-        self.mask_file = mask_file
         scope = ['https://spreadsheets.google.com/feeds']
         credentials = ServiceAccountCredentials.from_json_keyfile_name(credentials_file, scope)
         self.gc = gspread.authorize(credentials)
-
+        # Class variables
+        self.cat_main = cat_main
+        self.cat_second = cat_second
+        self.cat_all = [self.cat_main, self.cat_second]
         self.file_name = file_name
-        self.tail = tail
+        self.cf = credentials
         self.mask_file = mask_file
+        self.tail = tail
         self.add_stopwords = add_stopwords
         self.figures_folder = figures_folder
 
@@ -53,7 +53,6 @@ class indicator_map():
         self._get_data()
         elapsed = time.clock(); print("OK  {0:0.2f}s".format(elapsed - start))
         start = time.clock()
-        wks = self.gc.open(slef.file_name).get_worksheet(worksheet)
         self._get_bin()
         elapsed = time.clock(); print("OK  {0:0.2f}s".format(elapsed - start))
         start = time.clock()
@@ -210,8 +209,6 @@ class indicator_map():
         stopwords.add("number")
         stopwords.add("row")
         stopwords.add("ratio")
-        file_name = "{}/tagcloud_{}.png".format(self.figures_folder, name)
-        self.wc.to_file(path.join(os.getcwd(), file_name))
         for i in data.index:
             stopwords.add(i)
             stopwords.add(i.lower())

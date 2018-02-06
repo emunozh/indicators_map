@@ -7,3 +7,9 @@ Pillow
 oauth2client
 gspread
 wordcloud
+dill
+flask
+jinja2
+simplejson
+requests
+gunicorn
