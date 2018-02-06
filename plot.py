@@ -14,12 +14,15 @@ from bokeh.embed import components
 
 COLORMAP = ["#1f78b4", "#33a02c", "#e31a1c", "#6a3d9a"]
 
-def _make_bokeh_hm(dataframe_map, INX, show_plot = False):
+def _make_bokeh_hm(dataframe_map, show_plot = False, post_title = ""):
     data = dataframe_map.copy()
     data = data.fillna(0)
 
     xname_a = data.columns.tolist()
-    yname_a = ["{} - {}".format(*i) for i in data.index.get_values()]
+    if isinstance(data.index.get_values()[0], str):
+        yname_a = [i for i in data.index]
+    else:
+        yname_a = ["{} - {}".format(*i) for i in data.index.get_values()]
     counts = data.as_matrix()
 
     xname = []
@@ -33,14 +36,18 @@ def _make_bokeh_hm(dataframe_map, INX, show_plot = False):
             xname.append(node2)
             yname.append(node1)
 
-            this_cat = node1.split(' - ')[0]
+            if '-' in node1:
+                this_cat = node1.split(' - ')[0]
+                alpha.append(min(counts[i,j]/4.0, 0.9) + 0.1)
+            else:
+                this_cat = "no"
+                alpha.append(counts[i,j])
             if this_cat != old_cat:
                 col_inx += 1
             if col_inx >= len(COLORMAP):
                 col_inx = 0
             old_cat = this_cat
 
-            alpha.append(min(counts[i,j]/4.0, 0.9) + 0.1)
 
             if counts[i,j] == 0:
                 color.append('#FFFFFF')
@@ -55,17 +62,22 @@ def _make_bokeh_hm(dataframe_map, INX, show_plot = False):
         count=counts.flatten(),
     ))
 
-    p = figure(title="Indicators",
+    if len(post_title) >= 1:
+        fig_title = "Inficators for ctaegory: {}".format(post_title)
+    else:
+        fig_title = "Inficators"
+
+    p = figure(title=fig_title,
                x_axis_location="above", tools="hover,save",
                x_range = xname_a, y_range = yname_a
               )
 
-    p.plot_width = len(xname_a) * 25
-    p.plot_height = len(yname_a) * 25
+    p.plot_width = len(xname_a) * 30
+    p.plot_height = len(yname_a) * 30
     p.grid.grid_line_color = None
     p.axis.axis_line_color = None
     p.axis.major_tick_line_color = None
-    p.axis.major_label_text_font_size = "5pt"
+    p.axis.major_label_text_font_size = "10pt"
     p.axis.major_label_standoff = 0
     p.xaxis.major_label_orientation = np.pi/3
 
@@ -89,7 +101,7 @@ def _make_bokeh_hm(dataframe_map, INX, show_plot = False):
 def main():
     from indicators import indicator_map
     m = indicator_map()
-    _ = _make_bokeh_hm(m._get_map(), m.INX, show_plot = True)
+    _ = _make_bokeh_hm(m._get_map(), show_plot = True)
 
 
 if __name__ == "__main__":

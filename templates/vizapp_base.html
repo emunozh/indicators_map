@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Application on Heroku and Flask for the infdicator mapping tool of UN Environment.">
+    <meta name="author" content="emunozh@gmail.com">
+     <link rel="icon" href="favicon.ico">
+
+    <title>Indicator Mapping</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css">
+    <!-- Bokeh core CSS -->
+    <link href="/static/bokeh-0.12.13.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/bokeh-widgets-0.12.13.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/bokeh-tables-0.12.13.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- Bokeh core JavaScript -->
+    <script src="/static/bokeh-0.12.13.min.js"></script>
+    <script src="/static/bokeh-widgets-0.12.13.min.js"></script>
+    <script src="/static/bokeh-tables-0.12.13.min.js"></script>
+    {{ script | safe }}
+
+  </head>
+  <body>
+    <div class=page>
+      <h1>Indicator Mapping | App</h1>
+          <img src="/static/logo.png" alt="UN Environment"></p>
+        <form action="" method="post">
+            <fieldset>
+            <legend>Input variables:</legend>
+            <p> Select options </p>
+            Category:<br>
+              <input type="text" name="category"><br>
+            Sub-Category:<br>
+              <input type="text" name="sub-category"><br>
+            Keyword(s):<br>
+              <input type="text" name="keyword"><br>
+            Bokeh:<br>
+              <input type="radio" name="bokeh" value="yes" checked> Yes<br>
+              <input type="radio" name="bokeh" value="no"> No<br>
+            Type:<br>
+              <input type="radio" name="type" value="heatmap" checked> Heatmap<br>
+              <input type="radio" name="type" value="tag-cloud"> Tag-Cloud<br>
+            Group:<br>
+            <select>
+                <option value="" disabled="disabled" selected="selected">Please select a group</option>
+                <option value="ce">Circular Economy</option>
+                <option value="2">Two</option>
+            </select><br>
+            <input type="submit" value="Submit!" />
+            </fieldset>
+        </form>
+        {% block content %}{% endblock %}
+        <p><a href="/">Home</a></p>
+    </div>
+  </body>
+</html>

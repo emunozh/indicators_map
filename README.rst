@@ -1,7 +1,7 @@
 Mapping of indicators
 =====================
 
-.. image:: logo.png
+.. image:: static/logo.png
    :scale: 100 %
    :alt: logo
    :align: center

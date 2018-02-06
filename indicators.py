@@ -18,6 +18,8 @@ from PIL import Image
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from wordcloud import WordCloud, STOPWORDS
+# internal
+from plot import _make_bokeh_hm
 
 class indicator_map():
     """Main class for the construction of heatmaps and tag-cluds."""
@@ -29,8 +31,8 @@ class indicator_map():
             cat_main = "Category",
             add_stopwords = list(),
             cat_second = "Abstract Indicator Name",
-            figures_folder = "FIGURES",
-            mask_file = "circular.png"):
+            figures_folder = "static/FIGURES",
+            mask_file = "static/circular.png"):
         # make credential for Google API
         credentials_file = path.join(os.getcwd(), credentials)
         print('using {} as credentials'.format(credentials_file))
@@ -141,7 +143,7 @@ class indicator_map():
 
     def make_heatmap(self,
             category = False, subcategory = False, keyword = False, inx = False,
-            data = False,
+            data = False, use_bokeh = False, show_plot = False,
             h = 10, w = 20, name = "cat_", **kwargs):
         """
         TODO write documentations
@@ -175,17 +177,29 @@ class indicator_map():
         else:
             data = data.groupby([self.cat_main]).sum()
         data = data.loc[:, inx]
-        # make data relative
-        data = data.div(data.sum()).mul(100)
         # make plot
-        fig, ax = plt.subplots(figsize=(w, h))
-        sns.heatmap(data, ax = ax, **kwargs)
-        data[data >= 1] = 1
-        a = data.sum(axis=1).sort_values(ascending=False)[0:4]
-        b = "\n".join(["{} ({})".format(a.index[e], int(i)) for e, i in enumerate(a)][0:3])
-        ax.set_title("{} {}\n\n{}\n".format(title, category, b))
-        fig.tight_layout()
-        plt.savefig("{}/heatmap_{}.png".format(self.figures_folder, name), dpi=300)
+        if use_bokeh:
+            # make data relative
+            data = data.div(data.sum())
+            if category:
+                bokeh_figure = _make_bokeh_hm(data, show_plot = show_plot, post_title = category)
+            else:
+                bokeh_figure = _make_bokeh_hm(data, show_plot = show_plot)
+            return(bokeh_figure)
+        else:
+            # make data relative
+            data = data.div(data.sum()).mul(100)
+            data[data == 0] = np.nan
+            fig, ax = plt.subplots(figsize=(w, h))
+            sns.heatmap(data, ax = ax, **kwargs)
+            data[data >= 1] = 1
+            a = data.sum(axis=1).sort_values(ascending=False)[0:4]
+            b = "\n".join(["{} ({})".format(a.index[e], int(i)) for e, i in enumerate(a)][0:3])
+            ax.set_title("{} {}\n\n{}\n".format(title, category, b))
+            fig.tight_layout()
+            fig_path = "{}/heatmap_{}.png".format(self.figures_folder, name)
+            plt.savefig(fig_path, dpi=300)
+            return(fig_path)
 
     def _create_wc(self, data = False, **kwargs):
         if 'max_words' not in kwargs:
@@ -194,7 +208,10 @@ class indicator_map():
             kwargs['background_color'] = "white"
         if 'mask' not in kwargs:
             d = os.getcwd()
-            kwargs['mask'] = np.array(Image.open(path.join(d, self.mask_file)))
+            print(d)
+            mask_path = path.join(d, self.mask_file)
+            print('using {} as mask'.format(mask_path))
+            kwargs['mask'] = np.array(Image.open(mask_path))
         if isinstance(data, bool):
             data = self.dataframe_map_cat_rel
 
