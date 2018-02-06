@@ -13,6 +13,8 @@ import time
 import pandas as pd
 import numpy as np
 import seaborn as sns
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from PIL import Image
 import gspread
