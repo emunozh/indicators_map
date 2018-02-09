@@ -1,8 +1,14 @@
+numpy
+matplotlib
+pandas
+seaborn
+bokeh
+Pillow
 oauth2client
 gspread
 wordcloud
 dill
-flask
+Flask
 jinja2
 simplejson
 requests
