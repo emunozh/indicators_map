@@ -68,6 +68,12 @@ Indicator frameworks included on the anlysis:
 - Integrated Environmental Assessment Community Platform (IEA-UNEP, 2011). Training manual. Volume two: Climate Change Vulnerability and Impact Assessment in Cities. Retrieved from http://wedocs.unep.org/bitstream/handle/20.500.11822/11210/IEA-Climate-Change-VIA-City.pdf
 - CSD (2007) Theme indicator framework from the UN Division for Sustainable Development, 3nd Edition
 - EcoCity Builders
+- EUROSTAT. (2018). Monitoring Framework: Circular Economy Indicators. Retrieved from http://ec.europa.eu/eurostat/web/circular-economy/indicators/monitoring-framework
+- European Commission. (2015). EU Resource Efficiency Scoreboard 2015. Retrieved from http://ec.europa.eu/environment/resource_efficiency/targets_indicators/scoreboard/pdf/EU%20Resource%20Efficiency%20Scoreboard%202015.pdf
+- Ministry Of The Environment, Energy And Marine Affairs of France. (2017). 10 Key Indicators for Monitoring the Circular Economy. Retrieved from http://www.statistiques.developpement-durable.gouv.fr/fileadmin/documents/Produits_editoriaux/Publications/Datalab/2017/datalab-18-economie-circulaire-Edition-2017-anglais.pdf
+- European Commission. (2016). The Eco-innovation Scoreboard And The Eco-innovation Index. Retrieved from https://ec.europa.eu/environment/ecoap/indicators/index_en71a1/language-en
+- Directorate-General for Internal Market, Industry, Entrepreneurship and SMEs (European Commission). (2016). Raw materials scoreboard. Retrieved from https://publications.europa.eu/en/publication-detail/-/publication/1ee65e21-9ac4-11e6-868c-01aa75ed71a1/language-en
+- Inter-Agency and Expert Group on SDG Indicators (IAEG-SDGs). (2017). Global indicator framework for the Sustainable Development Goals and targets of the 2030 Agenda for Sustainable Development. Retrieved from https://unstats.un.org/sdgs/indicators/indicators-list/
 
 Support
 -------
